@@ -7,6 +7,12 @@ A Three.js-based simulation that visualizes what a 3D object looks like when mov
 - **Doppler shift** (redshift/blueshift)
 - **Geometric distortion** due to finite light speed
 
+## Authorship and Collaboration
+
+This project was developed collaboratively with a classmate (GitHub: @Unclesdad) as part of a Modern physics/computation project.
+
+I am submitting this repository as part of my MIT Maker Portfolio to represent my personal understanding, implementation, and ability to explain the simulation. I am fully familiar with the codebase and its underlying physics and computational structure.
+
 ## Physics Background
 
 ### 1. Retarded Time

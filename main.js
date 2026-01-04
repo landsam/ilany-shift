@@ -209,7 +209,31 @@ class RelativisticSimulator {
     getLorentzFactor(beta) {
         return 1.0 / Math.sqrt(1.0 - beta * beta);
     }
+    getDopplerFactor(beta, directionToObserver) {
+    // Velocity is along +x
+    const velocityDir = new THREE.Vector3(1, 0, 0);
 
+    // cos(theta)
+    const cosTheta = velocityDir.dot(directionToObserver);
+
+    const gamma = this.getLorentzFactor(beta);
+    return gamma * (1 - beta * cosTheta);
+    }
+
+    // Convert RGB color via wavelength shift approximation
+    applyDopplerToColor(color, dopplerFactor) {
+    // Clamp Doppler factor for visibility
+    const D = Math.max(0.3, Math.min(3.0, dopplerFactor));
+
+    // Simple physically motivated channel scaling
+    // Redshift: suppress blue, boost red
+    // Blueshift: boost blue, suppress red
+    const r = Math.min(1.0, color.r * Math.pow(D, -1.0));
+    const g = Math.min(1.0, color.g * Math.pow(D, -0.5));
+    const b = Math.min(1.0, color.b * Math.pow(D, 0.5));
+
+    return new THREE.Color(r, g, b);
+    }
     // Rotate a vertex around the Y-axis
     rotateVertexY(vertex, angle) {
         const cos = Math.cos(angle);
@@ -384,17 +408,37 @@ class RelativisticSimulator {
             positions[i + 1] = apparentPos.y;
             positions[i + 2] = apparentPos.z;
 
-            // Apply colors
+            // Determine base color
+            let baseColor;
             if (originalColors) {
-                colors[i] = originalColors[i];
-                colors[i + 1] = originalColors[i + 1];
-                colors[i + 2] = originalColors[i + 2];
+                baseColor = new THREE.Color(
+                    originalColors[i],
+                    originalColors[i + 1],
+                    originalColors[i + 2]
+                );
             } else {
-                // Default gray color
-                colors[i] = 0.8;
-                colors[i + 1] = 0.8;
-                colors[i + 2] = 0.8;
+                baseColor = new THREE.Color(0.8, 0.8, 0.8);
             }
+            
+            // Direction from vertex to observer (observer at origin)
+            const dirToObserver = new THREE.Vector3(
+                -apparentPos.x,
+                -apparentPos.y,
+                -apparentPos.z
+            ).normalize();
+            
+            // Doppler factor
+            const doppler = this.getDopplerFactor(this.velocity, dirToObserver);
+            
+            // Apply relativistic color shift (optional toggle)
+            const finalColor = this.enableDoppler
+                ? this.applyDopplerToColor(baseColor, doppler)
+                : baseColor;
+            
+            // Write final color
+            colors[i]     = finalColor.r;
+            colors[i + 1] = finalColor.g;
+            colors[i + 2] = finalColor.b;
         }
 
         this.relativisticMesh.geometry.attributes.position.needsUpdate = true;

@@ -18,6 +18,7 @@ class RelativisticSimulator {
         this.staticRotation = Math.PI / 2; // Static rotation angle in radians (90 degrees)
         this.angularVelocity = 0; // rad/s (positive = CW, negative = CCW)
         this.spinningEnabled = false; // Whether spinning mode is enabled
+        this.enableDoppler = false; //Whether Doppler Effect is enabled
         this.timeScale = 1.0;
         this.currentTime = -10; // Start time (negative so object approaches from distance)
         this.animationRunning = true;

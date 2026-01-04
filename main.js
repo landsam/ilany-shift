@@ -49,8 +49,8 @@ class RelativisticSimulator {
         // Setup camera
         // Observer effectively at origin, rotated 180 degrees to look backward initially
         // Position camera very slightly offset so OrbitControls can rotate
-        this.camera.position.set(0, 0, -0.01);
-        this.camera.lookAt(0, 0, 0);
+        this.camera.position.set(0, 0, -15);
+        this.camera.lookAt(0, 0, 5);
 
         // Add orbit controls for rotation (camera orbits very close to origin)
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
@@ -64,7 +64,7 @@ class RelativisticSimulator {
         this.controls.maxDistance = 0.01;
 
         // Add lighting - reduced intensity to not wash out vertex colors
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         this.scene.add(ambientLight);
 
         const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3);

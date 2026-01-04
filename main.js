@@ -31,7 +31,8 @@ class RelativisticSimulator {
 
         // Display options
         this.showActualPosition = false;
-
+        this.enableDoppler = false;
+        
         this.init();
         this.setupControls();
         this.loadDefaultModel();
@@ -195,6 +196,11 @@ class RelativisticSimulator {
             if (this.actualPositionMesh) {
                 this.actualPositionMesh.visible = this.showActualPosition;
             }
+        });
+
+        // Relativistic Doppler color toggle
+        document.getElementById('doppler-color').addEventListener('change', (e) => {
+            this.enableDoppler = e.target.checked;
         });
 
         // Initialize displays

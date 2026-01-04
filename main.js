@@ -6,6 +6,11 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const C = 299792458; // Speed of light in m/s
 const C_VISUAL = 10; // Visual speed of light for simulation (m/s in simulation units)
 
+function dopplerFactor(beta, cosTheta) {
+    const gamma = 1 / Math.sqrt(1 - beta * beta);
+    return gamma * (1 - beta * cosTheta);
+}
+
 class RelativisticSimulator {
     constructor() {
         this.scene = new THREE.Scene();
@@ -568,9 +573,26 @@ class RelativisticSimulator {
                 gltf.scene.traverse((child) => {
                     if (child.isMesh && !geometry) {
                         geometry = child.geometry.clone();
-                        material = child.material;
+                        material = child.material.clone();
+                
+                        const count = geometry.attributes.position.count;
+                        const colors = new Float32Array(count * 3);
+                
+                        for (let i = 0; i < count; i++) {
+                            colors[i * 3 + 0] = 1.0; // R
+                            colors[i * 3 + 1] = 1.0; // G
+                            colors[i * 3 + 2] = 1.0; // B
+                        }
+                
+                        geometry.setAttribute(
+                            "color",
+                            new THREE.BufferAttribute(colors, 3)
+                        );
+                
+                        material.vertexColors = true;
                     }
                 });
+
 
                 if (geometry) {
                     // Handle texture loading

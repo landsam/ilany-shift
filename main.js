@@ -199,7 +199,7 @@ class RelativisticSimulator {
         });
 
         // Relativistic Doppler color toggle
-        document.getElementById('doppler-color').addEventListener('change', (e) => {
+        document.getElementById('enable-doppler').addEventListener('change', (e) => {
             this.enableDoppler = e.target.checked;
         });
 

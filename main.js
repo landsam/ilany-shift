@@ -221,7 +221,7 @@ class RelativisticSimulator {
     const velocityDir = new THREE.Vector3(-1, 0, 0);
 
     // Photon propagation direction is from source to observer
-    const photonDir = directionToObserver.clone();
+    const photonDir = directionToObserver;
 
     // cos(theta) between velocity and photon direction
     const cosTheta = velocityDir.dot(photonDir);
@@ -230,7 +230,7 @@ class RelativisticSimulator {
     const ct = Math.max(-0.999, Math.min(0.999, cosTheta));
 
     // Relativistic Doppler factor for light
-    return Math.sqrt((1 + beta * ct) / (1 - beta * ct));
+    return Math.sqrt((1 - beta * ct) / (1 + beta * ct));
     }
 
     // Convert RGB color via wavelength shift approximation

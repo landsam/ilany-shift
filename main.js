@@ -230,7 +230,7 @@ class RelativisticSimulator {
     const ct = Math.max(-0.999, Math.min(0.999, cosTheta));
 
     // Relativistic Doppler factor for light
-    return Math.sqrt((1 - beta * ct) / (1 + beta * ct));
+    return Math.sqrt((1 + beta * ct) / (1 - beta * ct));
     }
 
     // Convert RGB color via wavelength shift approximation

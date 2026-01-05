@@ -239,11 +239,11 @@ class RelativisticSimulator {
     const D = Math.max(0.3, Math.min(3.0, dopplerFactor));
 
     // Simple physically motivated channel scaling
-    // Redshift: suppress blue, boost red
-    // Blueshift: boost blue, suppress red
-    const r = Math.min(1.0, color.r * Math.pow(D, -1.0));
-    const g = Math.min(1.0, color.g * Math.pow(D, -0.5));
-    const b = Math.min(1.0, color.b * Math.pow(D, 0.5));
+    // Blueshift (D > 1): boost blue, suppress red
+    // Redshift (D < 1): suppress blue, boost red
+    const r = Math.min(1.0, color.r * Math.pow(D, 1.0));
+    const g = Math.min(1.0, color.g * Math.pow(D, 0.5));
+    const b = Math.min(1.0, color.b * Math.pow(D, -0.5));
 
     return new THREE.Color(r, g, b);
     }

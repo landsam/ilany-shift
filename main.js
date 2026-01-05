@@ -221,7 +221,7 @@ class RelativisticSimulator {
     const velocityDir = new THREE.Vector3(-1, 0, 0);
 
     // Photon propagation direction is from source to observer
-    const photonDir = directionToObserver.clone().negate();
+    const photonDir = directionToObserver.clone();
 
     // cos(theta) between velocity and photon direction
     const cosTheta = velocityDir.dot(photonDir);

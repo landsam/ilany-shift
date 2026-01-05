@@ -217,17 +217,20 @@ class RelativisticSimulator {
         return 1.0 / Math.sqrt(1.0 - beta * beta);
     }
     getDopplerFactor(beta, directionToObserver) {
-    // Object velocity direction: toward observer at origin
-    const velocityDir = new THREE.Vector3(1, 0, 0);
+    // Object velocity: toward observer (−x direction)
+    const velocityDir = new THREE.Vector3(-1, 0, 0);
 
-    // cos(theta) between velocity and light propagation direction
-    const cosTheta = velocityDir.dot(directionToObserver);
+    // Photon propagation direction is from source to observer
+    const photonDir = directionToObserver.clone().negate();
+
+    // cos(theta) between velocity and photon direction
+    const cosTheta = velocityDir.dot(photonDir);
 
     // Clamp for numerical safety
     const ct = Math.max(-0.999, Math.min(0.999, cosTheta));
 
     // Relativistic Doppler factor for light
-    return Math.sqrt((1 - beta * ct) / (1 + beta * ct));
+    return Math.sqrt((1 + beta * ct) / (1 - beta * ct));
     }
 
     // Convert RGB color via wavelength shift approximation

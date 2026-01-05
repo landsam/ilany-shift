@@ -218,7 +218,7 @@ class RelativisticSimulator {
     }
     getDopplerFactor(beta, directionToObserver) {
     // Object velocity direction: toward observer at origin
-    const velocityDir = new THREE.Vector3(-1, 0, 0);
+    const velocityDir = new THREE.Vector3(1, 0, 0);
 
     // cos(theta) between velocity and light propagation direction
     const cosTheta = velocityDir.dot(directionToObserver);

@@ -7,6 +7,8 @@ A Three.js-based simulation that visualizes what a 3D object looks like when mov
 - **Doppler shift** (redshift/blueshift)
 - **Geometric distortion** due to finite light speed
 
+## [Live Demo](https://landsam.github.io/ilany-shift/)
+
 ## Authorship and Collaboration
 
 This project was developed collaboratively with a classmate (GitHub: @Unclesdad) as part of a Modern physics/computation project.
